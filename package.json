@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "docs": "rm -rf docs && ng build --base-href=https://yosiris-m.github.io/exercise-5-m/"
   },
   "private": true,
   "dependencies": {
