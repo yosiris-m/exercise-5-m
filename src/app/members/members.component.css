@@ -1,0 +1,61 @@
+.mainWrapper {
+  padding: 2rem;
+}
+
+.titleForm {
+  color: #6b686b;
+  text-align: center;
+}
+
+.boxForm {
+  margin-top: 6rem;
+}
+
+.wrapperButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btnAdd {
+  margin-right: 2rem;
+  background-color: rgba(161, 127, 192, 0.96);
+  color: aliceblue;
+}
+
+.btnAdd:hover {
+  background-color: #673ab7;
+}
+
+.btnDelete {
+  background-color: #9f9898;
+  color: aliceblue;
+}
+
+.btnDelete:hover {
+  background-color: #e5052e;
+}
+
+.newSocAddWrapper {
+  padding-bottom: 2rem;
+}
+
+.newSocAdd {
+  background-color: #673ab7;
+  color: white;
+  cursor: pointer;
+}
+
+.newSocAdd:hover {
+  background-color: #733bda;
+}
+
+.noMembersInfo {
+  text-align: center;
+}
+
+.editField {
+  padding-right: 1rem;
+  width: 9rem;
+}

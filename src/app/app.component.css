@@ -1,0 +1,29 @@
+.main {
+  min-width: 600px;
+  width: 80vw;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  background-color: rgba(256, 256, 256, 0.85);
+  height: 100vh;
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgPesas {
+  padding-top: 5rem;
+  width: 25rem;
+}

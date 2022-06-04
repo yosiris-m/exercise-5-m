@@ -1,0 +1,120 @@
+<main class="mainWrapper">
+  <div class="newSocAddWrapper">
+    <button mat-button (click)="showUserForm()" *ngIf="!showFormUser" class="newSocAdd">
+      <mat-icon class="iconList">supervisor_account</mat-icon>
+      Nuevo socio
+    </button>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="saveContact()" *ngIf="showFormUser">
+    <h1 class="titleForm">Crear nuevo socio</h1>
+    <mat-grid-list cols="2" rowHeight="1:0.2" class="boxForm">
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" [(ngModel)]="memberToCreate.name" name="name" minlength="3"
+                 type="text"
+                 class="input" required>
+          <mat-error *ngIf="userForm.value.name">Tiene que contener al menos 3 caracteres</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="lastName" [(ngModel)]="memberToCreate.lastName" class="input"
+                 name="lastName"
+                 minlength="3" type="text"
+                 required>
+          <mat-error *ngIf="userForm.value.lastName">Tiene que contener al menos 3 caracteres</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Número de socio</mat-label>
+          <input matInput formControlName="memberNumber" [(ngModel)]="memberToCreate.memberNumber" name="memberNumber"
+                 type="number">
+          <mat-error *ngIf="userForm.value.memberNumber">Tiene que estar entre 0 y 125</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="legalId" [(ngModel)]="memberToCreate.legalId" name="legalId"
+                 minlength="9" maxlength="9"
+                 type="text">
+          <mat-error *ngIf="userForm.value.legalId">Tiene que tener al menos 9 caracteres</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telephone" [(ngModel)]="memberToCreate.telephone" name="telephone"
+                 type="text">
+          <mat-error *ngIf="userForm.value.telephone">Tiene que contener al menos 3 caracteres</mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="gender" [(ngModel)]="memberToCreate.gender">
+            <mat-option *ngFor="let gender of genderValues" [value]="gender">{{gender}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <div class="wrapperButton">
+      <button class="btnAdd" mat-raised-button type="submit" matLine="large">Añadir al
+        listado
+      </button>
+      <button class="btnDelete" mat-raised-button type="button" (click)="cancelAddNewMember()">Cancelar
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="!showFormUser && memberList.length === 0" class="noMembersInfo">
+    No hay ningún socio del gimnasio registrado.
+  </div>
+
+  <table mat-table [dataSource]="memberList" style="width: 100%;"
+         *ngIf="!showFormUser && memberList.length > 0">
+    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ col.label }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+          <div class="btn-edit" *ngSwitchCase="'isEdit'">
+            <button mat-icon-button color="primary" (click)="element.isEdit = true">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteMember(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <span *ngSwitchDefault>{{ element[col.key] }}</span>
+        </div>
+        <div *ngIf="element.isEdit">
+          <div class="btn-edit" *ngIf="col.key === 'isEdit'; else dataField">
+            <button mat-button (click)="element.isEdit = false">Guardar</button>
+          </div>
+          <ng-template #dataField>
+            <mat-form-field [ngSwitch]="col.type" class="editField">
+              <mat-select [(ngModel)]="element[col.key]" *ngSwitchCase="'gender'">
+                <mat-option *ngFor="let gender of genderValues" [value]="gender">{{gender}}</mat-option>
+              </mat-select>
+              <input
+                [type]="col.type"
+                matInput
+                [(ngModel)]="element[col.key]"
+                *ngSwitchDefault
+              />
+            </mat-form-field>
+          </ng-template>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</main>
+
+
